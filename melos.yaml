@@ -1,7 +1,14 @@
 name: flutter_tutorial
 
 packages:
-  - apps/**
-  - packages/**
+  - apps/*
+  - packages/*
 
+command:
+  version:
+    branch: main
+    linkToCommits: true
 
+  bootstrap:
+    runPubGetInParallel: false
+    enforceLockfile: true
