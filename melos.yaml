@@ -1,0 +1,7 @@
+name: flutter_tutorial
+
+packages:
+  - apps/**
+  - packages/**
+
+
