@@ -1,4 +1,5 @@
 name: flutter_tutorial
+repository: https://github.com/mntm/flutter_tutorial
 
 packages:
   - apps/*
@@ -11,4 +12,3 @@ command:
 
   bootstrap:
     runPubGetInParallel: false
-    enforceLockfile: true
