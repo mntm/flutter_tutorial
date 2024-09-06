@@ -48,13 +48,43 @@ class _CatalogScreenState extends State<CatalogScreen> {
                   dimension: 24, child: ColoredBox(color: item.color)),
               isThreeLine: false,
               title: Text(item.name),
-              trailing: IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.add),
-              ),
+              trailing: _AddToCartButtonView(item: item),
             );
           },
         ),
+      ),
+    );
+  }
+}
+class _AddToCartButtonView extends StatelessWidget {
+  const _AddToCartButtonView({
+    super.key,
+    required this.item,
+  });
+
+  final Item item;
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<CartController>(
+      builder: (context, cart, child) {
+        return cart.items.contains(item)
+            ? IconButton(
+                onPressed: () {
+                  context.read<CartController>().remove(item.id);
+                },
+                icon: const Icon(
+                  Icons.remove,
+                  color: Colors.red,
+                ),
+              )
+            : child!;
+      },
+      child: IconButton(
+        onPressed: () {
+          context.read<CartController>().add(item.id);
+        },
+        icon: const Icon(Icons.add),
       ),
     );
   }
