@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:paint_catalog/controllers/cart_controller.dart';
 import 'package:paint_catalog/models/item.dart';
+import 'package:provider/provider.dart';
 
 class CartScreen extends StatelessWidget {
   static const String uri = "cart";
@@ -26,7 +28,7 @@ class CartScreen extends StatelessWidget {
             height: 4,
             color: Colors.black,
           ),
-          const _CartTotalView(230),
+          const _CartTotalView(),
         ],
       ),
     );
@@ -34,12 +36,9 @@ class CartScreen extends StatelessWidget {
 }
 
 class _CartTotalView extends StatelessWidget {
-  const _CartTotalView(
-    this.totalPrice, {
+  const _CartTotalView({
     super.key,
   });
-
-  final double totalPrice;
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +48,10 @@ class _CartTotalView extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            "\$$totalPrice",
-            style:
-                textTheme.displayLarge!.copyWith(fontWeight: FontWeight.bold),
+          Consumer<CartController>(
+            builder: (context, cart, child) {
+              return _PriceTextView(cart.totalPrice);
+            },
           ),
           const SizedBox(
             width: 20,
@@ -71,6 +70,25 @@ class _CartTotalView extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _PriceTextView extends StatelessWidget {
+  const _PriceTextView(
+    this._value, {
+    super.key,
+  });
+
+  final double _value;
+
+  @override
+  Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+
+    return Text(
+      "\$${_value.toStringAsFixed(2)}",
+      style: textTheme.displayLarge!.copyWith(fontWeight: FontWeight.bold),
     );
   }
 }
