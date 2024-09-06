@@ -7,8 +7,7 @@ import 'package:paint_catalog/screens/cart_screen.dart';
 class CatalogScreen extends StatefulWidget {
   static const String uri = "/";
 
-  const CatalogScreen({super.key, required this.catalog});
-  final Catalog catalog;
+  const CatalogScreen({super.key});
 
   @override
   State<CatalogScreen> createState() => _CatalogScreenState();
@@ -18,6 +17,8 @@ class _CatalogScreenState extends State<CatalogScreen> {
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
+    Catalog catalog = context.read<CatalogController>().catalogService.catalog;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.yellow,
@@ -42,7 +43,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
         child: ListView.builder(
           itemCount: 50,
           itemBuilder: (context, id) {
-            Item item = widget.catalog.getById(id);
+            Item item = catalog.getById(id);
             return ListTile(
               leading: SizedBox.square(
                   dimension: 24, child: ColoredBox(color: item.color)),

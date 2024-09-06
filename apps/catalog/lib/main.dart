@@ -34,9 +34,7 @@ final _router = GoRouter(
   routes: [
     GoRoute(
       path: CatalogScreen.uri,
-      builder: (context, state) => CatalogScreen(
-        catalog: Catalog(),
-      ),
+      builder: (context, state) => const CatalogScreen(),
 
       /// uses subroute to enable animation between screens
       /// and automatically add a back button on the AppBar
