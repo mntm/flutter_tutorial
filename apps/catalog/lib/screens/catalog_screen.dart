@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:paint_catalog/controllers/cart_controller.dart';
+import 'package:paint_catalog/controllers/catalog_controller.dart';
 import 'package:paint_catalog/models/catalog.dart';
 import 'package:paint_catalog/models/item.dart';
 import 'package:paint_catalog/screens/cart_screen.dart';
+import 'package:provider/provider.dart';
 
 class CatalogScreen extends StatefulWidget {
   static const String uri = "/";
@@ -22,21 +25,11 @@ class _CatalogScreenState extends State<CatalogScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.yellow,
-        title: Center(child: Text("Catalog", style: textTheme.headlineLarge)),
-        actions: [
-          Badge.count(
-            count: 0,
-            alignment: Alignment.center,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: IconButton(
-                  onPressed: () {
-                    /// Use `goNamed` instead of `go` to simplify the syntax
-                    context.goNamed(CartScreen.uri);
-                  },
-                  icon: const Icon(Icons.shopping_cart)),
-            ),
-          ),
+        title: const Text("Catalog"),
+        titleTextStyle: textTheme.headlineLarge,
+        centerTitle: true,
+        actions: const [
+          _CartActionView(),
         ],
       ),
       body: SafeArea(
@@ -57,6 +50,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
     );
   }
 }
+
 class _AddToCartButtonView extends StatelessWidget {
   const _AddToCartButtonView({
     super.key,
@@ -86,6 +80,35 @@ class _AddToCartButtonView extends StatelessWidget {
           context.read<CartController>().add(item.id);
         },
         icon: const Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+class _CartActionView extends StatelessWidget {
+  const _CartActionView({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<CartController>(
+      builder: (context, cart, child) {
+        if (cart.items.isEmpty) {
+          return child ?? const Icon(Icons.shopping_cart_outlined);
+        }
+        return Badge.count(
+          count: cart.items.length,
+          alignment: Alignment.center,
+          child: child,
+        );
+      },
+      child: IconButton(
+        onPressed: () {
+          /// Use `goNamed` instead of `go` to simplify the syntax
+          context.goNamed(CartScreen.uri);
+        },
+        icon: const Icon(Icons.shopping_cart),
       ),
     );
   }
