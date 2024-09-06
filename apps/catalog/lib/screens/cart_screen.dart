@@ -103,19 +103,24 @@ class _CartItemListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
-        itemCount: cart.length,
-        itemBuilder: (context, id) {
-          return ListTile(
-            trailing: const Icon(
-              Icons.circle,
-              size: 8,
-            ),
-            title: Text(cart[id].name),
-          );
-        },
-      ),
+    return Consumer<CartController>(
+      builder: (context, cart, child) {
+        return Expanded(
+          child: ListView.builder(
+            itemCount: cart.items.length,
+            itemBuilder: (context, id) {
+              Item item = cart.items[id];
+              return ListTile(
+                leading: const Icon(
+                  Icons.circle,
+                  size: 8,
+                ),
+                title: Text(item.name),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }
