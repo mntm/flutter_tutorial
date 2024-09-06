@@ -56,17 +56,28 @@ class _CartTotalView extends StatelessWidget {
           const SizedBox(
             width: 20,
           ),
-          FilledButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.white,
-              foregroundColor: Colors.black,
-            ),
-            child: Text(
-              "BUY",
-              style: textTheme.headlineSmall!
-                  .copyWith(fontWeight: FontWeight.bold),
-            ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FilledButton(
+                onPressed: () {},
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.black,
+                ),
+                child: Text(
+                  "BUY",
+                  style: textTheme.headlineSmall!
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Provider.of<CartController>(context, listen: false).clear();
+                },
+                child: const Text("Clear"),
+              )
+            ],
           ),
         ],
       ),
