@@ -1,4 +1,4 @@
-import 'package:paint_catalog/services/catalog_service.dart';
+import 'package:paint_collection/paint_collection.dart';
 
 class CatalogController {
   final CatalogService _service;

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:paint_collection/paint_collection.dart';
 import 'package:paint_catalog/controllers/cart_controller.dart';
 import 'package:paint_catalog/controllers/catalog_controller.dart';
-import 'package:paint_catalog/models/catalog.dart';
 import 'package:paint_catalog/screens/cart_screen.dart';
 import 'package:paint_catalog/screens/catalog_screen.dart';
-import 'package:paint_catalog/services/cart_service.dart';
-import 'package:paint_catalog/services/catalog_service.dart';
 import 'package:provider/provider.dart';
 
 void main() {

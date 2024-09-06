@@ -1,5 +1,4 @@
-import 'package:paint_catalog/models/catalog.dart';
-import 'package:paint_catalog/models/item.dart';
+import 'package:paint_collection/paint_collection.dart';
 
 class CatalogService {
   final Catalog _catalog;
