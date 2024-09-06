@@ -99,7 +99,6 @@ class _CartActionView extends StatelessWidget {
         }
         return Badge.count(
           count: cart.items.length,
-          alignment: Alignment.center,
           child: child,
         );
       },
