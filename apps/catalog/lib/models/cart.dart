@@ -8,7 +8,8 @@ class Cart {
   // this is a view, a proxy, of _items. It can only be read not written
   UnmodifiableListView<Item> get items => UnmodifiableListView(_items);
 
-  int get totalPrice => _items.fold<int>(0, (sum, item) => sum + item.price);
+  double get totalPrice =>
+      _items.fold<double>(0, (sum, item) => sum + item.price);
 
   void addItem(Item item) {
     _items.add(item);
