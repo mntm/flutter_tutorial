@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:paint_collection/paint_collection.dart';
 import 'package:paint_catalog/controllers/cart_controller.dart';
-import 'package:paint_catalog/models/item.dart';
 import 'package:provider/provider.dart';
 
 class CartScreen extends StatelessWidget {
@@ -36,9 +36,7 @@ class CartScreen extends StatelessWidget {
 }
 
 class _CartTotalView extends StatelessWidget {
-  const _CartTotalView({
-    super.key,
-  });
+  const _CartTotalView();
 
   @override
   Widget build(BuildContext context) {
@@ -86,10 +84,7 @@ class _CartTotalView extends StatelessWidget {
 }
 
 class _PriceTextView extends StatelessWidget {
-  const _PriceTextView(
-    this._value, {
-    super.key,
-  });
+  const _PriceTextView(this._value);
 
   final double _value;
 
@@ -106,7 +101,6 @@ class _PriceTextView extends StatelessWidget {
 
 class _CartItemListView extends StatelessWidget {
   const _CartItemListView({
-    super.key,
     required this.cart,
   });
 

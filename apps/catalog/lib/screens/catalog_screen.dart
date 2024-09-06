@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:paint_catalog/controllers/cart_controller.dart';
 import 'package:paint_catalog/controllers/catalog_controller.dart';
-import 'package:paint_catalog/models/catalog.dart';
-import 'package:paint_catalog/models/item.dart';
+import 'package:paint_collection/paint_collection.dart';
 import 'package:paint_catalog/screens/cart_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -53,7 +52,6 @@ class _CatalogScreenState extends State<CatalogScreen> {
 
 class _AddToCartButtonView extends StatelessWidget {
   const _AddToCartButtonView({
-    super.key,
     required this.item,
   });
 
@@ -86,9 +84,7 @@ class _AddToCartButtonView extends StatelessWidget {
 }
 
 class _CartActionView extends StatelessWidget {
-  const _CartActionView({
-    super.key,
-  });
+  const _CartActionView();
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,4 @@
-import 'package:paint_catalog/models/item.dart';
+import 'package:paint_collection/paint_collection.dart';
 
 class Catalog {
   static List<String> itemNames = [

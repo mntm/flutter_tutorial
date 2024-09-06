@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:paint_catalog/models/item.dart';
+import 'package:paint_collection/paint_collection.dart';
 
 class Cart {
   // this gets modified internally
