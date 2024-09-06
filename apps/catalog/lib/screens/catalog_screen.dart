@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:paint_catalog/models/catalog.dart';
 import 'package:paint_catalog/models/item.dart';
+import 'package:paint_catalog/screens/cart_screen.dart';
 
 class CatalogScreen extends StatefulWidget {
+  static const String uri = "/";
+
   const CatalogScreen({super.key, required this.catalog});
   final Catalog catalog;
 
@@ -25,7 +29,11 @@ class _CatalogScreenState extends State<CatalogScreen> {
             child: Padding(
               padding: const EdgeInsets.only(right: 8.0),
               child: IconButton(
-                  onPressed: () {}, icon: const Icon(Icons.shopping_cart)),
+                  onPressed: () {
+                    /// Use `goNamed` instead of `go` to simplify the syntax
+                    context.goNamed(CartScreen.uri);
+                  },
+                  icon: const Icon(Icons.shopping_cart)),
             ),
           ),
         ],

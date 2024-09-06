@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:paint_catalog/models/item.dart';
 
 class CartScreen extends StatelessWidget {
+  static const String uri = "cart";
+
   CartScreen({super.key});
   final List<Item> cart = [];
 
