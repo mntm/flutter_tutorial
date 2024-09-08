@@ -1,10 +1,7 @@
-import 'package:catalog_bloc/controllers/cart_controller.dart';
-import 'package:catalog_bloc/controllers/catalog_controller.dart';
 import 'package:catalog_bloc/screens/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:paint_collection/paint_collection.dart';
-import 'package:provider/provider.dart';
 
 class CatalogScreen extends StatefulWidget {
   static const String uri = "/";
@@ -19,7 +16,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
-    Catalog catalog = context.read<CatalogController>().catalogService.catalog;
+    Catalog catalog = Catalog();
 
     return Scaffold(
       appBar: AppBar(
@@ -59,26 +56,9 @@ class _AddToCartButtonView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<CartController>(
-      builder: (context, cart, child) {
-        return cart.items.contains(item)
-            ? IconButton(
-                onPressed: () {
-                  context.read<CartController>().remove(item.id);
-                },
-                icon: const Icon(
-                  Icons.remove,
-                  color: Colors.red,
-                ),
-              )
-            : child!;
-      },
-      child: IconButton(
-        onPressed: () {
-          context.read<CartController>().add(item.id);
-        },
-        icon: const Icon(Icons.add),
-      ),
+    return IconButton(
+      onPressed: () {},
+      icon: const Icon(Icons.add),
     );
   }
 }
@@ -88,23 +68,12 @@ class _CartActionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<CartController>(
-      builder: (context, cart, child) {
-        if (cart.items.isEmpty) {
-          return child ?? const Icon(Icons.shopping_cart_outlined);
-        }
-        return Badge.count(
-          count: cart.items.length,
-          child: child,
-        );
+    return IconButton(
+      onPressed: () {
+        /// Use `goNamed` instead of `go` to simplify the syntax
+        context.goNamed(CartScreen.uri);
       },
-      child: IconButton(
-        onPressed: () {
-          /// Use `goNamed` instead of `go` to simplify the syntax
-          context.goNamed(CartScreen.uri);
-        },
-        icon: const Icon(Icons.shopping_cart),
-      ),
+      icon: const Icon(Icons.shopping_cart),
     );
   }
 }

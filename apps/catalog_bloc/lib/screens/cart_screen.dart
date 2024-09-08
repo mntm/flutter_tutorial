@@ -1,7 +1,5 @@
-import 'package:catalog_bloc/controllers/cart_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:paint_collection/paint_collection.dart';
-import 'package:provider/provider.dart';
 
 class CartScreen extends StatelessWidget {
   static const String uri = "cart";
@@ -46,11 +44,7 @@ class _CartTotalView extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Consumer<CartController>(
-            builder: (context, cart, child) {
-              return _PriceTextView(cart.totalPrice);
-            },
-          ),
+          const _PriceTextView(0.0),
           const SizedBox(
             width: 20,
           ),
@@ -70,9 +64,7 @@ class _CartTotalView extends StatelessWidget {
                 ),
               ),
               TextButton(
-                onPressed: () {
-                  Provider.of<CartController>(context, listen: false).clear();
-                },
+                onPressed: () {},
                 child: const Text("Clear"),
               )
             ],
@@ -108,24 +100,20 @@ class _CartItemListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<CartController>(
-      builder: (context, cart, child) {
-        return Expanded(
-          child: ListView.builder(
-            itemCount: cart.items.length,
-            itemBuilder: (context, id) {
-              Item item = cart.items[id];
-              return ListTile(
-                leading: const Icon(
-                  Icons.circle,
-                  size: 8,
-                ),
-                title: Text(item.name),
-              );
-            },
-          ),
-        );
-      },
+    return Expanded(
+      child: ListView.builder(
+        itemCount: cart.length,
+        itemBuilder: (context, id) {
+          Item item = cart[id];
+          return ListTile(
+            leading: const Icon(
+              Icons.circle,
+              size: 8,
+            ),
+            title: Text(item.name),
+          );
+        },
+      ),
     );
   }
 }
