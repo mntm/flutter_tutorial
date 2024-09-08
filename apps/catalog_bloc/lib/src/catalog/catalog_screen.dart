@@ -1,7 +1,8 @@
-import 'package:catalog_bloc/screens/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:paint_collection/paint_collection.dart';
+
+import 'package:catalog_bloc/src/cart/cart_screen.dart';
 
 class CatalogScreen extends StatefulWidget {
   static const String uri = "/";
