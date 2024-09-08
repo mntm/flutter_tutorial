@@ -1,8 +1,7 @@
+import 'package:catalog_bloc/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:paint_collection/paint_collection.dart';
-
-import 'package:catalog_bloc/src/cart/cart_screen.dart';
 
 class CatalogScreen extends StatefulWidget {
   static const String uri = "/";
@@ -71,8 +70,7 @@ class _CartActionView extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () {
-        /// Use `goNamed` instead of `go` to simplify the syntax
-        context.goNamed(CartScreen.uri);
+        context.go(ScreenRoutes.cartDestination.uri);
       },
       icon: const Icon(Icons.shopping_cart),
     );

@@ -1,22 +1,19 @@
+import 'package:catalog_bloc/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-import 'cart/cart_screen.dart';
-import 'catalog/catalog_screen.dart';
 
 final _router = GoRouter(
   routes: [
     GoRoute(
-      path: CatalogScreen.uri,
-      builder: (context, state) => const CatalogScreen(),
+      path: ScreenRoutes.homeDestination.uri,
+      builder: ScreenRoutes.homeDestination.page,
 
       /// uses subroute to enable animation between screens
       /// and automatically add a back button on the AppBar
       routes: [
         GoRoute(
-          path: CartScreen.uri,
-          builder: (_, __) => CartScreen(),
-          name: CartScreen.uri,
+          path: ScreenRoutes.cartDestination.uri,
+          builder: ScreenRoutes.cartDestination.page,
         )
       ],
     ),
