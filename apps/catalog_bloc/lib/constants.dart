@@ -1,5 +1,5 @@
 import 'package:catalog_bloc/src/cart/cart_screen.dart';
-import 'package:catalog_bloc/src/catalog/catalog_screen.dart';
+import 'package:catalog_bloc/src/catalog/catalog.dart';
 import 'package:flutter/material.dart';
 
 class ScreenDestination {
@@ -12,7 +12,7 @@ class ScreenDestination {
 class ScreenRoutes {
   static ScreenDestination homeDestination = ScreenDestination(
     CatalogScreen.uri,
-    (_, __) => const CatalogScreen(),
+    (_, __) => const CatalogPage(),
   );
   static ScreenDestination cartDestination = ScreenDestination(
     CartScreen.uri,
