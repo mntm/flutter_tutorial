@@ -21,7 +21,7 @@ class Repository {
     _cart.remove(item.id);
   }
 
-  void clearCart(Item item) {
+  void clearCart() {
     _cart.clear();
   }
 
