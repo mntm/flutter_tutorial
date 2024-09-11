@@ -1,5 +1,7 @@
 import 'package:catalog_bloc/constants.dart';
+import 'package:catalog_bloc/src/data/repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 final _router = GoRouter(
@@ -20,14 +22,19 @@ final _router = GoRouter(
   ],
 );
 
+final Repository repository = Repository();
+
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      routerConfig: _router,
+    return RepositoryProvider.value(
+      value: repository,
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        routerConfig: _router,
+      ),
     );
   }
 }
