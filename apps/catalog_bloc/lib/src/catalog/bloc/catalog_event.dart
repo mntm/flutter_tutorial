@@ -1,16 +1,24 @@
 part of "catalog_bloc.dart";
 
-sealed class CatalogEvent {}
+sealed class CatalogEvent extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
 
 class CatalogItemReceived extends CatalogEvent {
   final Item item;
   CatalogItemReceived(this.item);
+  @override
+  List<Object?> get props {
+    super.props.add(item);
+    return super.props;
+  }
 }
 
 class CatalogItemCompleted extends CatalogEvent {}
 
-class CatalogUpdated extends CatalogEvent {
-  CatalogUpdated();
+class CatalogRefreshRequested extends CatalogEvent {
+  CatalogRefreshRequested();
 }
 
 class CatalogInitiated extends CatalogEvent {

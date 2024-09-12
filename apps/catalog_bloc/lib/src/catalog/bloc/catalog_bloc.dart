@@ -16,6 +16,7 @@ class CatalogBloc extends Bloc<CatalogEvent, CatalogState> {
     on<CatalogInitiated>(_onCatalogInitiated);
     on<CatalogItemReceived>(_onItemReceived);
     on<CatalogItemCompleted>(_onItemCompleted);
+    on<CatalogRefreshRequested>(_onRefresh);
   }
 
   @override
@@ -26,17 +27,24 @@ class CatalogBloc extends Bloc<CatalogEvent, CatalogState> {
 
   void _onItemReceived(CatalogItemReceived event, Emitter<CatalogState> emit) {
     repository.addToCatalog(event.item);
-    emit(CatalogLoading(repository.catalogItems));
+    emit(CatalogLoading(List.of(repository.catalogItems)));
   }
 
   void _onItemCompleted(
       CatalogItemCompleted event, Emitter<CatalogState> emit) {
-    emit(CatalogReady(repository.catalogItems));
+    emit(CatalogReady(List.of(repository.catalogItems)));
   }
 
   FutureOr<void> _onCatalogInitiated(
       CatalogInitiated event, Emitter<CatalogState> emit) {
     emit(CatalogInitial());
+  }
+
+  FutureOr<void> _onRefresh(
+      CatalogRefreshRequested event, Emitter<CatalogState> emit) {
+    repository.clearCatalog();
+    emit(CatalogLoading(List.of(repository.catalogItems)));
+    _subscription?.cancel();
     _subscription = repository.loadCatalog().listen(
       (item) {
         add(

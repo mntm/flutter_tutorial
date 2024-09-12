@@ -1,5 +1,7 @@
 import 'package:catalog_bloc/constants.dart';
+import 'package:catalog_bloc/src/cart/bloc/cart_cubit.dart';
 import 'package:catalog_bloc/src/catalog/catalog.dart';
+import 'package:catalog_bloc/widgets/unified_pull_to_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:paint_collection/paint_collection.dart';
@@ -48,28 +50,29 @@ class _ItemListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CatalogBloc, CatalogState>(
-      builder: (context, state) {
-        if (state is CatalogInitial) {
-          context.read<CatalogBloc>().add(CatalogInitiated());
-          return const SizedBox.shrink();
-        }
-        List<Item> catalog = state.items;
+    return UnifiedPullToRefresh(
+      onRefresh: () {
+        CatalogBloc catalogBloc =
+            BlocProvider.of<CatalogBloc>(context, listen: false);
+        catalogBloc.add(CatalogRefreshRequested());
+        return catalogBloc.stream.firstWhere((state) {
+          return state is CatalogReady;
+        });
+      },
+      child: BlocBuilder<CatalogBloc, CatalogState>(builder: (context, state) {
         return CustomScrollView(
           slivers: [
-            if (state is CatalogLoading)
+            if (state is CatalogInitial)
               const SliverFillRemaining(
                 child: Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.black,
-                  ),
+                  child: Text("Pull to refresh"),
                 ),
               ),
-            if (state is CatalogReady)
+            if (state is! CatalogInitial)
               SliverList.builder(
-                itemCount: catalog.length,
+                itemCount: state.items.length,
                 itemBuilder: (context, id) {
-                  Item item = catalog.elementAt(id);
+                  Item item = state.items.elementAt(id);
                   return ListTile(
                     leading: SizedBox.square(
                         dimension: 24, child: ColoredBox(color: item.color)),
@@ -81,7 +84,7 @@ class _ItemListView extends StatelessWidget {
               )
           ],
         );
-      },
+      }),
     );
   }
 }
@@ -95,12 +98,18 @@ class _AddToCartButtonView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _DeselectedIconButton(item: item);
+    return BlocBuilder<CartCubit, List<Item>>(
+      builder: (context, state) {
+        return state.contains(item)
+            ? _RemoveIconButton(item: item)
+            : _AddIconButton(item: item);
+      },
+    );
   }
 }
 
-class _DeselectedIconButton extends StatelessWidget {
-  const _DeselectedIconButton({
+class _AddIconButton extends StatelessWidget {
+  const _AddIconButton({
     super.key,
     required this.item,
   });
@@ -110,14 +119,16 @@ class _DeselectedIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () {},
+      onPressed: () {
+        context.read<CartCubit>().addItemToCart(item);
+      },
       icon: const Icon(Icons.add),
     );
   }
 }
 
-class _SelectedIconButton extends StatelessWidget {
-  const _SelectedIconButton({
+class _RemoveIconButton extends StatelessWidget {
+  const _RemoveIconButton({
     super.key,
     required this.item,
   });
@@ -127,7 +138,9 @@ class _SelectedIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () {},
+      onPressed: () {
+        context.read<CartCubit>().removeItemFromCart(item);
+      },
       icon: const Icon(Icons.remove),
     );
   }
@@ -138,11 +151,19 @@ class _CartActionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
+    var iconButton = IconButton(
       onPressed: () {
-        context.go(ScreenRoutes.cartDestination.uri);
+        context.goNamed(ScreenRoutes.cartDestination.uri);
       },
       icon: const Icon(Icons.shopping_cart),
     );
+    return BlocBuilder<CartCubit, List<Item>>(builder: (context, state) {
+      return state.isEmpty
+          ? iconButton
+          : Badge.count(
+              count: state.length,
+              child: iconButton,
+            );
+    });
   }
 }

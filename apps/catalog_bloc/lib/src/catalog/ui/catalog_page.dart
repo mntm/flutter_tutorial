@@ -1,3 +1,4 @@
+import 'package:catalog_bloc/src/cart/cart.dart';
 import 'package:catalog_bloc/src/catalog/catalog.dart';
 import 'package:catalog_bloc/src/data/repository.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,10 @@ class CatalogPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Repository repo = context.read<Repository>();
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (_) => CatalogBloc(repo))],
+      providers: [
+        BlocProvider(create: (_) => CatalogBloc(repo)),
+        BlocProvider(create: (_) => CartCubit(repo))
+      ],
       child: const CatalogScreen(),
     );
   }
