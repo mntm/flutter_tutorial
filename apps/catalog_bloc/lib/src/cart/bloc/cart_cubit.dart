@@ -20,4 +20,10 @@ class CartCubit extends Cubit<List<Item>> {
     repo.clearCart();
     emit(List.of(repo.cartItems));
   }
+
+  void refreshCart() {
+    emit(List.of(repo.cartItems));
+  }
+
+  double get totalPrice => repo.totalCartPrice;
 }

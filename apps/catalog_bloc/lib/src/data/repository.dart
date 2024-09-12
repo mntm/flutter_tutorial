@@ -26,6 +26,8 @@ class Repository {
   }
 
   UnmodifiableListView<Item> get cartItems => UnmodifiableListView(_cart.items);
+  double get totalCartPrice => _cart.totalPrice;
+
   // Catalog Operations
 
   final List<Item> _catalogItems = [];
