@@ -36,10 +36,14 @@ class Repository {
     _catalogItems.add(item);
   }
 
+  void clearCatalog() {
+    _catalogItems.clear();
+  }
+
   Stream<Item> loadCatalog() async* {
     for (var i = 0; i < 100; i++) {
       yield _catalog.getById(i);
-      // await Future.delayed(const Duration(milliseconds: 200));
+      await Future.delayed(const Duration(milliseconds: 20));
     }
   }
 }

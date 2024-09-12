@@ -14,9 +14,9 @@ final _router = GoRouter(
       /// and automatically add a back button on the AppBar
       routes: [
         GoRoute(
-          path: ScreenRoutes.cartDestination.uri,
-          builder: ScreenRoutes.cartDestination.page,
-        )
+            path: ScreenRoutes.cartDestination.uri,
+            builder: ScreenRoutes.cartDestination.page,
+            name: ScreenRoutes.cartDestination.uri)
       ],
     ),
   ],
