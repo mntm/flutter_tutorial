@@ -1,4 +1,6 @@
 import 'package:catalog_bloc/constants.dart';
+import 'package:catalog_bloc/src/cart/bloc/cart_cubit.dart';
+import 'package:catalog_bloc/src/catalog/catalog.dart';
 import 'package:catalog_bloc/src/data/repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,8 +31,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider.value(
-      value: repository,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => CatalogBloc(repository)),
+        BlocProvider(create: (_) => CartCubit(repository))
+      ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         routerConfig: _router,
