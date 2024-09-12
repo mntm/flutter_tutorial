@@ -1,4 +1,6 @@
+import 'package:catalog_bloc/src/cart/bloc/cart_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:paint_collection/paint_collection.dart';
 
 class CartScreen extends StatelessWidget {
@@ -18,15 +20,15 @@ class CartScreen extends StatelessWidget {
         titleTextStyle: textTheme.headlineLarge,
       ),
       backgroundColor: Colors.yellow,
-      body: Column(
+      body: const Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _CartItemListView(cart: cart),
-          const Divider(
+          _CartItemListView(),
+          Divider(
             height: 4,
             color: Colors.black,
           ),
-          const _CartTotalView(),
+          _CartTotalView(),
         ],
       ),
     );
@@ -44,7 +46,7 @@ class _CartTotalView extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const _PriceTextView(0.0),
+          const _PriceTextView(),
           const SizedBox(
             width: 20,
           ),
@@ -64,7 +66,9 @@ class _CartTotalView extends StatelessWidget {
                 ),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.read<CartCubit>().clearCart();
+                },
                 child: const Text("Clear"),
               )
             ],
@@ -76,41 +80,40 @@ class _CartTotalView extends StatelessWidget {
 }
 
 class _PriceTextView extends StatelessWidget {
-  const _PriceTextView(this._value);
-
-  final double _value;
+  const _PriceTextView();
 
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
+    var value = context.watch<CartCubit>().totalPrice;
 
     return Text(
-      "\$${_value.toStringAsFixed(2)}",
+      "\$${value.toStringAsFixed(2)}",
       style: textTheme.displayLarge!.copyWith(fontWeight: FontWeight.bold),
     );
   }
 }
 
 class _CartItemListView extends StatelessWidget {
-  const _CartItemListView({
-    required this.cart,
-  });
-
-  final List<Item> cart;
-
+  const _CartItemListView();
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: ListView.builder(
-        itemCount: cart.length,
-        itemBuilder: (context, id) {
-          Item item = cart[id];
-          return ListTile(
-            leading: const Icon(
-              Icons.circle,
-              size: 8,
-            ),
-            title: Text(item.name),
+      child: BlocBuilder<CartCubit, List<Item>>(
+        builder: (context, state) {
+          return ListView.builder(
+            itemCount: state.length,
+            itemBuilder: (context, id) {
+              Item item = state[id];
+              return ListTile(
+                isThreeLine: false,
+                leading: const Icon(
+                  Icons.circle,
+                  size: 8,
+                ),
+                title: Text(item.name),
+              );
+            },
           );
         },
       ),
