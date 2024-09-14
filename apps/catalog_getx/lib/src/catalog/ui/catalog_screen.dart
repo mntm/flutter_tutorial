@@ -1,5 +1,5 @@
 import 'package:catalog_getx/src/cart/cart.dart';
-import 'package:catalog_getx/src/catalog/catalog_controller.dart';
+import 'package:catalog_getx/src/catalog/catalog.dart';
 import 'package:catalog_getx/widgets/unified_pull_to_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
