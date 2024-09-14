@@ -1,22 +1,14 @@
 import 'package:catalog_getx/src/app.dart';
+import 'package:catalog_getx/src/catalog/catalog_controller.dart';
 import 'package:catalog_getx/widgets/unified_pull_to_refresh.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:paint_collection/paint_collection.dart';
 
-class CatalogScreen extends StatefulWidget {
+class CatalogScreen extends StatelessWidget {
   static const String uri = "/";
 
   const CatalogScreen({super.key});
-
-  @override
-  State<CatalogScreen> createState() => _CatalogScreenState();
-}
-
-class _CatalogScreenState extends State<CatalogScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +31,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
   }
 }
 
-class _ItemListView extends StatelessWidget {
+class _ItemListView extends GetView<CatalogController> {
   const _ItemListView({
     super.key,
   });
@@ -47,26 +39,41 @@ class _ItemListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return UnifiedPullToRefresh(
-        onRefresh: () {
-          return Future.delayed(Duration.zero);
+      onRefresh: () {
+        controller.refreshCatalog();
+        return Future.delayed(Duration.zero);
+      },
+      child: GetBuilder<CatalogController>(
+        builder: (context) {
+          return controller.obx(
+              (state) => ListView.builder(
+                    itemCount: state.length,
+                    itemBuilder: (context, id) {
+                      Item item = state.elementAt(id);
+                      return ListTile(
+                        leading: SizedBox.square(
+                            dimension: 24,
+                            child: ColoredBox(color: item.color)),
+                        isThreeLine: false,
+                        title: Text(item.name),
+                        trailing: _AddToCartButtonView(item: item),
+                      );
+                    },
+                  ),
+              onLoading: const Center(
+                child: CircleAvatar(
+                  backgroundColor: Colors.yellow,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ));
         },
-        child: CustomScrollView(
-          slivers: [
-            SliverList.builder(
-              itemCount: repository.catalogItems.length,
-              itemBuilder: (context, id) {
-                Item item = repository.catalogItems.elementAt(id);
-                return ListTile(
-                  leading: SizedBox.square(
-                      dimension: 24, child: ColoredBox(color: item.color)),
-                  isThreeLine: false,
-                  title: Text(item.name),
-                  trailing: _AddToCartButtonView(item: item),
-                );
-              },
-            )
-          ],
-        ));
+      ),
+    );
   }
 }
 

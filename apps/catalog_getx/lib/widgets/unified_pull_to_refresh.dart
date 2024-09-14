@@ -14,6 +14,7 @@ class UnifiedPullToRefresh extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator.adaptive(
+      color: Colors.black,
       onRefresh: onRefresh,
       child: ScrollConfiguration(
         behavior: ScrollConfiguration.of(context).copyWith(
