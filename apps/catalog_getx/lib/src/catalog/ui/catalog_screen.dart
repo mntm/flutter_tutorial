@@ -1,8 +1,6 @@
-import 'package:catalog_getx/constants.dart';
 import 'package:catalog_getx/src/app.dart';
 import 'package:catalog_getx/widgets/unified_pull_to_refresh.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:paint_collection/paint_collection.dart';
 
 class CatalogScreen extends StatefulWidget {
@@ -131,9 +129,7 @@ class _CartActionView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var iconButton = IconButton(
-      onPressed: () {
-        context.goNamed(ScreenRoutes.cartDestination.uri);
-      },
+      onPressed: () {},
       icon: const Icon(Icons.shopping_cart),
     );
     return repository.cartItems.isEmpty
