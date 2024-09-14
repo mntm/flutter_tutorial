@@ -1,4 +1,4 @@
-import 'package:catalog_getx/src/app.dart';
+import 'package:catalog_getx/src/cart/cart.dart';
 import 'package:catalog_getx/src/catalog/catalog_controller.dart';
 import 'package:catalog_getx/widgets/unified_pull_to_refresh.dart';
 import 'package:flutter/material.dart';
@@ -86,9 +86,10 @@ class _AddToCartButtonView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return repository.cartItems.contains(item)
-        ? _RemoveIconButton(item: item)
-        : _AddIconButton(item: item);
+    return GetBuilder<CartController>(
+        builder: (controller) => controller.cartItems.contains(item)
+            ? _RemoveIconButton(item: item)
+            : _AddIconButton(item: item));
   }
 }
 
@@ -104,7 +105,7 @@ class _AddIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () {
-        repository.addToCart(item);
+        Get.find<CartController>().addItemToCart(item);
       },
       icon: const Icon(Icons.add),
     );
@@ -123,14 +124,14 @@ class _RemoveIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () {
-        return repository.removeFromCart(item);
+        Get.find<CartController>().removeItemFromCart(item);
       },
       icon: const Icon(Icons.remove),
     );
   }
 }
 
-class _CartActionView extends StatelessWidget {
+class _CartActionView extends GetView<CartController> {
   const _CartActionView();
 
   @override
@@ -139,11 +140,14 @@ class _CartActionView extends StatelessWidget {
       onPressed: () {},
       icon: const Icon(Icons.shopping_cart),
     );
-    return repository.cartItems.isEmpty
-        ? iconButton
-        : Badge.count(
-            count: repository.cartItems.length,
-            child: iconButton,
-          );
+
+    return GetBuilder<CartController>(
+      builder: (controller) => controller.cartItems.isEmpty
+          ? iconButton
+          : Badge.count(
+              count: controller.cartItems.length,
+              child: iconButton,
+            ),
+    );
   }
 }
