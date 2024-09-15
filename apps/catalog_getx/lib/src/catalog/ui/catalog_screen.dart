@@ -97,7 +97,7 @@ class _AddToCartButtonView extends StatelessWidget {
   }
 }
 
-class _AddIconButton extends StatelessWidget {
+class _AddIconButton extends GetView<CartController> {
   const _AddIconButton({
     super.key,
     required this.item,
@@ -109,14 +109,14 @@ class _AddIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () {
-        Get.find<CartController>().addItemToCart(item);
+        controller.addItemToCart(item);
       },
       icon: const Icon(Icons.add),
     );
   }
 }
 
-class _RemoveIconButton extends StatelessWidget {
+class _RemoveIconButton extends GetView<CartController> {
   const _RemoveIconButton({
     super.key,
     required this.item,
@@ -128,7 +128,7 @@ class _RemoveIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () {
-        Get.find<CartController>().removeItemFromCart(item);
+        controller.removeItemFromCart(item);
       },
       icon: const Icon(Icons.remove),
     );
