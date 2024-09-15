@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   get: ^5.0.0-release-candidate-9.2
+  mntm_widgets: ^0.0.1
   paint_collection: ^0.0.1
 
 dev_dependencies:

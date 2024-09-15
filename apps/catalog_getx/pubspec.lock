@@ -144,6 +144,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.15.0"
+  mntm_widgets:
+    dependency: "direct main"
+    description:
+      path: "../../packages/mntm_widgets"
+      relative: true
+    source: path
+    version: "0.0.1"
   paint_collection:
     dependency: "direct main"
     description:

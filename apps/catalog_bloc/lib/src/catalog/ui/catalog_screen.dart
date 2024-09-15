@@ -1,9 +1,9 @@
 import 'package:catalog_bloc/constants.dart';
 import 'package:catalog_bloc/src/cart/bloc/cart_cubit.dart';
 import 'package:catalog_bloc/src/catalog/catalog.dart';
-import 'package:catalog_bloc/widgets/unified_pull_to_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mntm_widgets/mntm_widgets.dart';
 import 'package:paint_collection/paint_collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
