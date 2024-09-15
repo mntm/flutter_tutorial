@@ -1,4 +1,5 @@
 import 'package:catalog_getx/src/cart/cart.dart';
+import 'package:catalog_getx/widgets/browser_compatible_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paint_collection/paint_collection.dart';
@@ -12,8 +13,7 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: !GetPlatform.isWeb,
+      appBar: BrowserCompatibleAppBar(
         title: const Text("Cart"),
         centerTitle: true,
         titleTextStyle: textTheme.headlineLarge,

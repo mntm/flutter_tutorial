@@ -2,6 +2,7 @@ import 'package:catalog_getx/constants.dart';
 import 'package:catalog_getx/src/cart/cart.dart';
 import 'package:catalog_getx/src/catalog/catalog.dart';
 import 'package:catalog_getx/widgets/auto_hide_badge_count.dart';
+import 'package:catalog_getx/widgets/browser_compatible_app_bar.dart';
 import 'package:catalog_getx/widgets/custom_circular_progress_indicator.dart';
 import 'package:catalog_getx/widgets/unified_pull_to_refresh.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +19,7 @@ class CatalogScreen extends StatelessWidget {
     TextTheme textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: !GetPlatform.isWeb,
+      appBar: BrowserCompatibleAppBar(
         backgroundColor: Colors.yellow,
         title: const Text("Catalog"),
         titleTextStyle: textTheme.headlineLarge,
