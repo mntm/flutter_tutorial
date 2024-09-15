@@ -1,6 +1,7 @@
 import 'package:catalog_bloc/src/cart/bloc/cart_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mntm_widgets/mntm_widgets.dart';
 import 'package:paint_collection/paint_collection.dart';
 
 class CartScreen extends StatelessWidget {
@@ -14,7 +15,7 @@ class CartScreen extends StatelessWidget {
     TextTheme textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      appBar: AppBar(
+      appBar: BrowserCompatibleAppBar(
         title: const Text("Cart"),
         centerTitle: true,
         titleTextStyle: textTheme.headlineLarge,

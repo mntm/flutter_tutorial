@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mntm_widgets/widgets/widgets.dart';
 import 'package:paint_catalog/controllers/cart_controller.dart';
 import 'package:paint_catalog/controllers/catalog_controller.dart';
 import 'package:paint_collection/paint_collection.dart';
@@ -22,7 +23,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
     Catalog catalog = context.read<CatalogController>().catalogService.catalog;
 
     return Scaffold(
-      appBar: AppBar(
+      appBar: BrowserCompatibleAppBar(
         backgroundColor: Colors.yellow,
         title: const Text("Catalog"),
         titleTextStyle: textTheme.headlineLarge,
@@ -90,10 +91,7 @@ class _CartActionView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<CartController>(
       builder: (context, cart, child) {
-        if (cart.items.isEmpty) {
-          return child ?? const Icon(Icons.shopping_cart_outlined);
-        }
-        return Badge.count(
+        return AutoHideBadgeCount(
           count: cart.items.length,
           child: child,
         );
