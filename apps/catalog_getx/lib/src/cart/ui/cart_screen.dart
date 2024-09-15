@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:paint_collection/paint_collection.dart';
 
 class CartScreen extends StatelessWidget {
-  static const String uri = "cart";
+  static const String uri = "/cart";
 
   CartScreen({super.key});
   final List<Item> cart = [];

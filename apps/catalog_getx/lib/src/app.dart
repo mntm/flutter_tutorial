@@ -11,8 +11,17 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: ScreenRoutes.homeDestination.page(context, null),
-    );
+        debugShowCheckedModeBanner: false,
+        home: ScreenRoutes.homeDestination.page(context, null),
+        getPages: [
+          GetPage(
+            name: ScreenRoutes.homeDestination.uri,
+            page: () => ScreenRoutes.homeDestination.page(context, null),
+          ),
+          GetPage(
+            name: ScreenRoutes.cartDestination.uri,
+            page: () => ScreenRoutes.cartDestination.page(context, null),
+          ),
+        ]);
   }
 }

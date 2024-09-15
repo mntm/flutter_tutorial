@@ -1,3 +1,4 @@
+import 'package:catalog_getx/constants.dart';
 import 'package:catalog_getx/src/cart/cart.dart';
 import 'package:catalog_getx/src/catalog/catalog.dart';
 import 'package:catalog_getx/widgets/unified_pull_to_refresh.dart';
@@ -137,7 +138,9 @@ class _CartActionView extends GetView<CartController> {
   @override
   Widget build(BuildContext context) {
     var iconButton = IconButton(
-      onPressed: () {},
+      onPressed: () {
+        Get.toNamed(ScreenRoutes.cartDestination.uri);
+      },
       icon: const Icon(Icons.shopping_cart),
     );
 
