@@ -150,14 +150,14 @@ packages:
       path: "../../packages/mntm_widgets"
       relative: true
     source: path
-    version: "0.0.1"
+    version: "0.0.2"
   paint_collection:
     dependency: "direct main"
     description:
       path: "../../packages/paint_collection"
       relative: true
     source: path
-    version: "0.0.1"
+    version: "0.0.2"
   path:
     dependency: transitive
     description:
