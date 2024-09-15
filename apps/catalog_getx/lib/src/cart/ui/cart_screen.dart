@@ -13,6 +13,7 @@ class CartScreen extends StatelessWidget {
     TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: !GetPlatform.isWeb,
         title: const Text("Cart"),
         centerTitle: true,
         titleTextStyle: textTheme.headlineLarge,
@@ -86,11 +87,11 @@ class _PriceTextView extends StatelessWidget {
     return GetBuilder<CartController>(
         init: CartController(),
         builder: (controller) {
-    return Text(
+          return Text(
             "\$${controller.totalPrice.toStringAsFixed(2)}",
             style:
                 textTheme.displayLarge!.copyWith(fontWeight: FontWeight.bold),
-    );
+          );
         });
   }
 }
@@ -102,21 +103,21 @@ class _CartItemListView extends StatelessWidget {
     return GetBuilder<CartController>(
       init: CartController(),
       builder: (controller) {
-    return Expanded(
-      child: ListView.builder(
+        return Expanded(
+          child: ListView.builder(
             itemCount: controller.cartItems.length,
-        itemBuilder: (context, id) {
+            itemBuilder: (context, id) {
               Item item = controller.cartItems.elementAt(id);
-          return ListTile(
-            isThreeLine: false,
-            leading: const Icon(
-              Icons.circle,
-              size: 8,
-            ),
-            title: Text(item.name),
-          );
-        },
-      ),
+              return ListTile(
+                isThreeLine: false,
+                leading: const Icon(
+                  Icons.circle,
+                  size: 8,
+                ),
+                title: Text(item.name),
+              );
+            },
+          ),
         );
       },
     );

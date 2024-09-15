@@ -17,6 +17,7 @@ class CatalogScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: !GetPlatform.isWeb,
         backgroundColor: Colors.yellow,
         title: const Text("Catalog"),
         titleTextStyle: textTheme.headlineLarge,
