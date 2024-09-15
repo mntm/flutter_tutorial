@@ -1,9 +1,9 @@
 import 'package:catalog_bloc/constants.dart';
 import 'package:catalog_bloc/src/cart/bloc/cart_cubit.dart';
 import 'package:catalog_bloc/src/catalog/catalog.dart';
-import 'package:catalog_bloc/widgets/unified_pull_to_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mntm_widgets/mntm_widgets.dart';
 import 'package:paint_collection/paint_collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,7 +27,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
     TextTheme textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      appBar: AppBar(
+      appBar: BrowserCompatibleAppBar(
         backgroundColor: Colors.yellow,
         title: const Text("Catalog"),
         titleTextStyle: textTheme.headlineLarge,
@@ -55,9 +55,7 @@ class _ItemListView extends StatelessWidget {
         CatalogBloc catalogBloc =
             BlocProvider.of<CatalogBloc>(context, listen: false);
         catalogBloc.add(CatalogRefreshRequested());
-        return catalogBloc.stream.firstWhere((state) {
-          return state is CatalogReady;
-        });
+        return Future.delayed(Duration.zero);
       },
       child: BlocBuilder<CatalogBloc, CatalogState>(builder: (context, state) {
         return CustomScrollView(
@@ -67,6 +65,10 @@ class _ItemListView extends StatelessWidget {
                 child: Center(
                   child: Text("Pull to refresh"),
                 ),
+              ),
+            if (state is CatalogLoading)
+              const SliverFillRemaining(
+                child: Center(child: CustomCircularProgressIndicator()),
               ),
             if (state is! CatalogInitial)
               SliverList.builder(
@@ -158,12 +160,10 @@ class _CartActionView extends StatelessWidget {
       icon: const Icon(Icons.shopping_cart),
     );
     return BlocBuilder<CartCubit, List<Item>>(builder: (context, state) {
-      return state.isEmpty
-          ? iconButton
-          : Badge.count(
-              count: state.length,
-              child: iconButton,
-            );
+      return AutoHideBadgeCount(
+        count: state.length,
+        child: iconButton,
+      );
     });
   }
 }

@@ -1,19 +1,17 @@
-import 'package:catalog_bloc/src/cart/bloc/cart_cubit.dart';
+import 'package:catalog_getx/src/cart/cart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:mntm_widgets/mntm_widgets.dart';
 import 'package:paint_collection/paint_collection.dart';
 
 class CartScreen extends StatelessWidget {
-  static const String uri = "cart";
+  static const String uri = "/cart";
 
-  CartScreen({super.key});
-  final List<Item> cart = [];
+  const CartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
-
     return Scaffold(
       appBar: BrowserCompatibleAppBar(
         title: const Text("Cart"),
@@ -68,7 +66,7 @@ class _CartTotalView extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  context.read<CartCubit>().clearCart();
+                  Get.find<CartController>().clearCart();
                 },
                 child: const Text("Clear"),
               )
@@ -86,12 +84,15 @@ class _PriceTextView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
-    var value = context.watch<CartCubit>().totalPrice;
-
-    return Text(
-      "\$${value.toStringAsFixed(2)}",
-      style: textTheme.displayLarge!.copyWith(fontWeight: FontWeight.bold),
-    );
+    return GetBuilder<CartController>(
+        init: CartController(),
+        builder: (controller) {
+          return Text(
+            "\$${controller.totalPrice.toStringAsFixed(2)}",
+            style:
+                textTheme.displayLarge!.copyWith(fontWeight: FontWeight.bold),
+          );
+        });
   }
 }
 
@@ -99,13 +100,14 @@ class _CartItemListView extends StatelessWidget {
   const _CartItemListView();
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: BlocBuilder<CartCubit, List<Item>>(
-        builder: (context, state) {
-          return ListView.builder(
-            itemCount: state.length,
+    return GetBuilder<CartController>(
+      init: CartController(),
+      builder: (controller) {
+        return Expanded(
+          child: ListView.builder(
+            itemCount: controller.cartItems.length,
             itemBuilder: (context, id) {
-              Item item = state[id];
+              Item item = controller.cartItems.elementAt(id);
               return ListTile(
                 isThreeLine: false,
                 leading: const Icon(
@@ -115,9 +117,9 @@ class _CartItemListView extends StatelessWidget {
                 title: Text(item.name),
               );
             },
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

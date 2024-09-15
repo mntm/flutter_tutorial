@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   go_router: ^14.2.7
+  mntm_widgets: ^0.0.1
   paint_collection: ^0.0.1
   provider: ^6.1.2
 
