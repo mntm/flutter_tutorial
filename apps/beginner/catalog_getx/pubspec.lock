@@ -147,14 +147,14 @@ packages:
   mntm_widgets:
     dependency: "direct main"
     description:
-      path: "../../packages/mntm_widgets"
+      path: "../../../packages/mntm_widgets"
       relative: true
     source: path
     version: "0.0.2"
   paint_collection:
     dependency: "direct main"
     description:
-      path: "../../packages/paint_collection"
+      path: "../../../packages/paint_collection"
       relative: true
     source: path
     version: "0.0.2"

@@ -3,6 +3,9 @@ repository: https://github.com/mntm/flutter_tutorial
 
 packages:
   - apps/*
+  - apps/beginner/*
+  - apps/intermediate/*
+  - apps/advanced/*
   - packages/*
 
 command:
