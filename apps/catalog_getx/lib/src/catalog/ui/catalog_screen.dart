@@ -2,6 +2,7 @@ import 'package:catalog_getx/constants.dart';
 import 'package:catalog_getx/src/cart/cart.dart';
 import 'package:catalog_getx/src/catalog/catalog.dart';
 import 'package:catalog_getx/widgets/auto_hide_badge_count.dart';
+import 'package:catalog_getx/widgets/custom_circular_progress_indicator.dart';
 import 'package:catalog_getx/widgets/unified_pull_to_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -65,15 +66,7 @@ class _ItemListView extends GetView<CatalogController> {
                     },
                   ),
               onLoading: const Center(
-                child: CircleAvatar(
-                  backgroundColor: Colors.yellow,
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
+                child: CustomCircularProgressIndicator(),
               ));
         },
       ),
