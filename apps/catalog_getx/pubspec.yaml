@@ -1,7 +1,7 @@
 name: catalog_getx
 description: "A new Flutter project."
 publish_to: "none"
-version: 0.1.0
+version: 0.1.1
 
 environment:
   sdk: ^3.5.2
@@ -12,7 +12,7 @@ dependencies:
     sdk: flutter
   get: ^5.0.0-release-candidate-9.2
   mntm_widgets: ^0.0.2
-  paint_collection: ^0.0.1
+  paint_collection: ^0.0.2
 
 dev_dependencies:
   flutter_test:
