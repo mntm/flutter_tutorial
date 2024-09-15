@@ -151,9 +151,12 @@ class _CartActionView extends GetView<CartController> {
       init: CartController(),
       builder: (controller) => controller.cartItems.isEmpty
           ? iconButton
-          : Badge.count(
-              count: controller.cartItems.length,
-              child: iconButton,
+          : Container(
+              margin: const EdgeInsets.only(right: 8),
+              child: Badge.count(
+                count: controller.cartItems.length,
+                child: iconButton,
+              ),
             ),
     );
   }
