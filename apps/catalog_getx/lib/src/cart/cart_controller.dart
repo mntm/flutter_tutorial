@@ -22,12 +22,12 @@ class CartController extends GetxController {
   }
 
   void clearCart() {
-    // _repo.clearCart();
+    _repo.clearCart();
     update();
   }
 
   void refreshCart() {}
 
-  get totalPrice => _repo.totalCartPrice.obs;
-  RxList<Item> get cartItems => List.of(_repo.cartItems).obs;
+  double get totalPrice => _repo.totalCartPrice;
+  List<Item> get cartItems => _repo.cartItems;
 }

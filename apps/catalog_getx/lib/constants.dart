@@ -16,6 +16,6 @@ class ScreenRoutes {
   );
   static ScreenDestination cartDestination = ScreenDestination(
     CartScreen.uri,
-    (_, __) => CartScreen(),
+    (_, __) => const CartScreen(),
   );
 }

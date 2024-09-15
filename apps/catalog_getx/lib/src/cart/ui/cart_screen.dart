@@ -1,17 +1,16 @@
-import 'package:catalog_getx/src/app.dart';
+import 'package:catalog_getx/src/cart/cart.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:paint_collection/paint_collection.dart';
 
 class CartScreen extends StatelessWidget {
   static const String uri = "/cart";
 
-  CartScreen({super.key});
-  final List<Item> cart = [];
+  const CartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("Cart"),
@@ -65,7 +64,9 @@ class _CartTotalView extends StatelessWidget {
                 ),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.find<CartController>().clearCart();
+                },
                 child: const Text("Clear"),
               )
             ],
@@ -82,11 +83,15 @@ class _PriceTextView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
-
+    return GetBuilder<CartController>(
+        init: CartController(),
+        builder: (controller) {
     return Text(
-      "\$0.0",
-      style: textTheme.displayLarge!.copyWith(fontWeight: FontWeight.bold),
+            "\$${controller.totalPrice.toStringAsFixed(2)}",
+            style:
+                textTheme.displayLarge!.copyWith(fontWeight: FontWeight.bold),
     );
+        });
   }
 }
 
@@ -94,11 +99,14 @@ class _CartItemListView extends StatelessWidget {
   const _CartItemListView();
   @override
   Widget build(BuildContext context) {
+    return GetBuilder<CartController>(
+      init: CartController(),
+      builder: (controller) {
     return Expanded(
       child: ListView.builder(
-        itemCount: repository.cartItems.length,
+            itemCount: controller.cartItems.length,
         itemBuilder: (context, id) {
-          Item item = repository.cartItems.elementAt(id);
+              Item item = controller.cartItems.elementAt(id);
           return ListTile(
             isThreeLine: false,
             leading: const Icon(
@@ -109,6 +117,8 @@ class _CartItemListView extends StatelessWidget {
           );
         },
       ),
+        );
+      },
     );
   }
 }

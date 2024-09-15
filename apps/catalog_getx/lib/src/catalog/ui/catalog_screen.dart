@@ -45,6 +45,7 @@ class _ItemListView extends GetView<CatalogController> {
         return Future.delayed(Duration.zero);
       },
       child: GetBuilder<CatalogController>(
+        init: CatalogController(),
         builder: (context) {
           return controller.obx(
               (state) => ListView.builder(
@@ -88,6 +89,7 @@ class _AddToCartButtonView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CartController>(
+        init: CartController(),
         builder: (controller) => controller.cartItems.contains(item)
             ? _RemoveIconButton(item: item)
             : _AddIconButton(item: item));
@@ -145,6 +147,7 @@ class _CartActionView extends GetView<CartController> {
     );
 
     return GetBuilder<CartController>(
+      init: CartController(),
       builder: (controller) => controller.cartItems.isEmpty
           ? iconButton
           : Badge.count(
