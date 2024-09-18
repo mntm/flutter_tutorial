@@ -1,8 +1,9 @@
-import 'package:api_fetch_bloc/src/posts/bloc/post_bloc.dart';
-import 'package:api_fetch_bloc/src/posts/data/post_repository.dart';
-import 'package:api_fetch_bloc/src/posts/widgets/widgets.dart';
+import 'package:api_fetch_bloc/src/posts/bloc/bloc.dart';
+import 'package:api_fetch_bloc/src/posts/data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'post_list_view.dart';
 
 class PostListPage extends StatelessWidget {
   const PostListPage({super.key});
