@@ -28,7 +28,7 @@ class PostItemTile extends StatelessWidget {
         ),
         subtitle: Text(
           item.body,
-          maxLines: 3,
+          maxLines: 2,
           overflow: TextOverflow.ellipsis,
         ),
       ),
