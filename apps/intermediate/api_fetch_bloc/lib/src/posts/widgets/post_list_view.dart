@@ -15,6 +15,9 @@ class PostListView extends StatelessWidget {
         context.read<PostBloc>().add(PostRequested());
         return const Center(child: Text("Loading ..."));
       }
+      if (state.status == PostStatus.failure) {
+        return const Center(child: Text("An error occured"));
+      }
       return GridView.builder(
           itemCount:
               state.hasNext ? state.posts.length + 1 : state.posts.length,
@@ -27,7 +30,7 @@ class PostListView extends StatelessWidget {
           itemBuilder: (context, index) {
             if (index >= state.posts.length) {
               context.read<PostBloc>().add(PostRequested());
-              return Text("Loading...");
+              return const Text("Loading...");
             }
             return PostItemTile(item: state.posts[index]);
           });
