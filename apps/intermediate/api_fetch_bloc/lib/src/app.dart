@@ -1,4 +1,4 @@
-import 'package:api_fetch_bloc/src/posts/ui/ui.dart';
+import 'package:api_fetch_bloc/src/posts/list/ui/ui.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatelessWidget {

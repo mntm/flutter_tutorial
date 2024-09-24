@@ -1,4 +1,4 @@
-import 'package:api_fetch_bloc/src/posts/bloc/bloc.dart';
+import 'package:api_fetch_bloc/src/posts/list/bloc/bloc.dart';
 import 'package:api_fetch_bloc/src/posts/data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
