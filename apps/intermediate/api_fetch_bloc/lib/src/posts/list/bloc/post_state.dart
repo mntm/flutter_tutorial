@@ -1,13 +1,7 @@
 part of 'post_bloc.dart';
 
-enum PostStatus {
-  initial,
-  success,
-  failure,
-}
-
 class PostState extends Equatable {
-  final PostStatus status;
+  final RequestStatus status;
   final bool hasNext;
   final List<PostItem> posts;
 
@@ -21,7 +15,7 @@ class PostState extends Equatable {
   List<Object?> get props => [status, hasNext, posts];
 
   PostState copyWith({
-    PostStatus? status,
+    RequestStatus? status,
     bool? hasNext,
     List<PostItem>? posts,
   }) {

@@ -1,5 +1,6 @@
 import 'package:api_fetch_bloc/src/posts/list/bloc/bloc.dart';
 import 'package:api_fetch_bloc/src/posts/widgets/widgets.dart';
+import 'package:api_fetch_bloc/utils/request_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -40,10 +41,10 @@ class _PostListViewState extends State<PostListView> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PostBloc, PostState>(builder: (context, state) {
-      if (state.status == PostStatus.initial) {
+      if (state.status == RequestStatus.initial) {
         return const Center(child: Text("Loading ..."));
       }
-      if (state.status == PostStatus.failure) {
+      if (state.status == RequestStatus.failure) {
         return const Center(child: Text("An error occured"));
       }
       if (state.posts.isEmpty) {

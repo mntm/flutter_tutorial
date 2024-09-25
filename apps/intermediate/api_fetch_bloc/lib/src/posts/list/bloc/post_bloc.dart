@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:api_fetch_bloc/src/posts/data/post_repository.dart';
-import 'package:api_fetch_bloc/src/posts/models/post_item.dart';
+import 'package:api_fetch_bloc/src/posts/models/models.dart';
+import 'package:api_fetch_bloc/utils/request_status.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +21,7 @@ EventTransformer<E> throttleEvents<E>(Duration duration) {
 
 class PostBloc extends Bloc<PostEvent, PostState> {
   PostBloc(this.repo)
-      : super(const PostState(status: PostStatus.initial, hasNext: true)) {
+      : super(const PostState(status: RequestStatus.initial, hasNext: true)) {
     on<PostRequested>(_onPostRequested,
         transformer: throttleEvents(const Duration(milliseconds: 300)));
   }
@@ -41,12 +42,12 @@ class PostBloc extends Bloc<PostEvent, PostState> {
                 hasNext: false,
               )
             : state.copyWith(
-                status: PostStatus.success,
+                status: RequestStatus.success,
                 hasNext: items.length == limit,
                 posts: List.of(state.posts)..addAll(items)),
       );
     } catch (e) {
-      emit(state.copyWith(status: PostStatus.failure, hasNext: false));
+      emit(state.copyWith(status: RequestStatus.failure, hasNext: false));
     }
   }
 }
