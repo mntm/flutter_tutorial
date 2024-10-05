@@ -49,7 +49,7 @@ class AddNewPostWidget extends StatelessWidget {
           builder: (context) => const NewFormPage(),
         );
 
-        if (context.mounted) {
+        if (result != null && context.mounted) {
           context.read<PostBloc>().add(PostInserted(result));
         }
       },

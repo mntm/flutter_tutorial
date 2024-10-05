@@ -56,15 +56,16 @@ class _PostListViewState extends State<PostListView> {
               state.hasNext ? state.posts.length + 1 : state.posts.length,
           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: 300,
-            mainAxisExtent: 120,
+            mainAxisExtent: 98,
             crossAxisSpacing: 8,
             mainAxisSpacing: 8,
           ),
           itemBuilder: (context, index) {
-            if (index >= state.posts.length) {
-              return const Text("Loading...");
-            }
-            return PostItemTile(item: state.posts[index]);
+            Widget content = (index >= state.posts.length)
+                ? const Text("Loading...")
+                : PostItemTile(item: state.posts[index]);
+
+            return content;
           });
     });
   }
