@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:api_fetch_bloc/src/posts/models/models.dart';
 import 'package:api_fetch_bloc/utils/api_response_handler.dart';
 import 'package:api_fetch_bloc/utils/http_content_type.dart';
+import 'package:api_fetch_bloc/utils/modifying_http_method.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 
@@ -51,16 +52,17 @@ class PostRepository {
     }
   }
 
-  Future<dynamic> _performPost(
+  Future<dynamic> _performModifyingRequest(
     Uri url, {
     required dynamic data,
+    required ModifyingHttpMethod method,
     HttpContentType contentType = HttpContentType.json,
   }) async {
     Response response;
     try {
       var headers = {"content-type": contentType.value};
-      response = await _http.post(url,
-          headers: headers, body: contentType.encode(data));
+      response = await method.caller(_http,
+          url: url, headers: headers, body: contentType.encode(data));
     } catch (e) {
       throw Exception(
           "An error occured when trying to reach the server: ${e.runtimeType} -- ${e.toString()}");
@@ -71,8 +73,9 @@ class PostRepository {
 
   Future<PostItem> createItem(PostCreationPayload item) async {
     try {
-      var response = await _performPost(
+      var response = await _performModifyingRequest(
         Uri.parse("https://jsonplaceholder.typicode.com/posts"),
+        method: ModifyingHttpMethod.post,
         data: item,
       );
       return PostItem(
