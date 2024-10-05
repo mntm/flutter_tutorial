@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:equatable/equatable.dart';
 
 class PostItem extends Equatable {
@@ -12,6 +14,12 @@ class PostItem extends Equatable {
     required this.title,
     required this.body,
   });
+
+  @override
+  String toString() {
+    int bodyLength = min(body.length, 64);
+    return '''PostItem -- id: $id -- title: $title -- body: ${body.substring(0, bodyLength)} -- userId: $userId''';
+  }
 
   @override
   List<Object?> get props => [id, userId, title, body];
