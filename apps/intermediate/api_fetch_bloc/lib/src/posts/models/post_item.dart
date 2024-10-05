@@ -15,6 +15,14 @@ class PostItem extends Equatable {
     required this.body,
   });
 
+  PostItem.formJson(dynamic json)
+      : this(
+          id: json["id"],
+          userId: json["userId"],
+          title: json["title"],
+          body: json["body"],
+        );
+
   @override
   String toString() {
     int bodyLength = min(body.length, 64);

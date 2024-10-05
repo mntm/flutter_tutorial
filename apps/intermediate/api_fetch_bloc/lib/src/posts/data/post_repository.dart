@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:api_fetch_bloc/src/posts/models/models.dart';
 import 'package:api_fetch_bloc/utils/api_response_handler.dart';
 import 'package:api_fetch_bloc/utils/http_content_type.dart';
@@ -14,9 +12,6 @@ class PostRepository {
     List<PostItem> items = [];
     Response response = await _performGet(Uri.parse(
         "https://jsonplaceholder.typicode.com/posts?_start=$startIndex&_limit=$limit"));
-    if (response.statusCode != 200) {
-      throw Exception("error while fetching posts");
-    }
     items = _decodeResponseForItems(response);
     return items;
   }
@@ -24,16 +19,11 @@ class PostRepository {
   List<PostItem> _decodeResponseForItems(Response response) {
     List<PostItem> items = [];
     try {
-      List<dynamic> json = jsonDecode(response.body) as List;
-      items = json
-          .map(
-            (elt) => PostItem(
-                id: elt["id"] as int,
-                userId: elt["userId"] as int,
-                title: elt["title"] as String,
-                body: elt["body"] as String),
-          )
-          .toList();
+      List<dynamic> json =
+          response.statusCode.asHttpStatusCode(response) as List;
+      items = json.map(PostItem.formJson).toList();
+    } on HttpException catch (_) {
+      rethrow;
     } catch (e) {
       debugPrintStack();
       throw const FormatException("Bad response format");
@@ -78,14 +68,22 @@ class PostRepository {
         method: ModifyingHttpMethod.post,
         data: item,
       );
-      return PostItem(
-        id: response["id"],
-        userId: response["userId"],
-        title: response["title"],
-        body: response["body"],
-      );
+      return PostItem.formJson(response);
     } catch (e) {
       throw Exception("Create Item: ${e.toString()}");
+    }
+  }
+
+  Future<PostItem> modifyItem(PostModificationPayload item) async {
+    try {
+      var response = await _performModifyingRequest(
+        Uri.parse("https://jsonplaceholder.typicode.com/posts/${item.id}"),
+        method: ModifyingHttpMethod.put,
+        data: item,
+      );
+      return PostItem.formJson(response);
+    } catch (e) {
+      throw Exception("Modify Item: ${e.toString()}");
     }
   }
 }
