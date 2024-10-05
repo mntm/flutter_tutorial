@@ -1,3 +1,4 @@
+import 'package:api_fetch_bloc/src/posts/create/ui/ui.dart';
 import 'package:api_fetch_bloc/src/posts/list/bloc/bloc.dart';
 import 'package:api_fetch_bloc/src/posts/data/data.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,31 @@ class PostListPage extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 8.0),
           child: PostListView(),
         ),
+        floatingActionButton: const AddNewPostWidget(),
       ),
+    );
+  }
+}
+
+class AddNewPostWidget extends StatelessWidget {
+  const AddNewPostWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () async {
+        var result = await showAdaptiveDialog(
+          context: context,
+          builder: (context) => const NewFormPage(),
+        );
+
+        if (context.mounted) {
+          context.read<PostBloc>().add(PostInserted(result));
+        }
+      },
+      child: const Icon(Icons.add),
     );
   }
 }
