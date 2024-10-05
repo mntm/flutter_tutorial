@@ -1,6 +1,8 @@
 import 'dart:convert';
 
-import 'package:api_fetch_bloc/src/posts/models/post_item.dart';
+import 'package:api_fetch_bloc/src/posts/models/models.dart';
+import 'package:api_fetch_bloc/utils/api_response_handler.dart';
+import 'package:api_fetch_bloc/utils/http_content_type.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 
@@ -46,6 +48,41 @@ class PostRepository {
     } catch (e) {
       throw Exception(
           "An error occured when trying to reach the server: ${e.runtimeType} -- ${e.toString()}");
+    }
+  }
+
+  Future<dynamic> _performPost(
+    Uri url, {
+    required dynamic data,
+    HttpContentType contentType = HttpContentType.json,
+  }) async {
+    Response response;
+    try {
+      var headers = {"content-type": contentType.value};
+      response = await _http.post(url,
+          headers: headers, body: contentType.encode(data));
+    } catch (e) {
+      throw Exception(
+          "An error occured when trying to reach the server: ${e.runtimeType} -- ${e.toString()}");
+    }
+
+    return response.statusCode.asHttpStatusCode(response);
+  }
+
+  Future<PostItem> createItem(PostCreationPayload item) async {
+    try {
+      var response = await _performPost(
+        Uri.parse("https://jsonplaceholder.typicode.com/posts"),
+        data: item,
+      );
+      return PostItem(
+        id: response["id"],
+        userId: response["userId"],
+        title: response["title"],
+        body: response["body"],
+      );
+    } catch (e) {
+      throw Exception("Create Item: ${e.toString()}");
     }
   }
 }
