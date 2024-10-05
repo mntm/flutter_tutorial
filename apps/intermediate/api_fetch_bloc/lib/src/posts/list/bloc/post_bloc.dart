@@ -24,6 +24,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       : super(const PostState(status: RequestStatus.initial, hasNext: true)) {
     on<PostRequested>(_onPostRequested,
         transformer: throttleEvents(const Duration(milliseconds: 300)));
+    on<PostInserted>(_onPostInserted);
   }
 
   final PostRepository repo;
@@ -49,5 +50,12 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     } catch (e) {
       emit(state.copyWith(status: RequestStatus.failure, hasNext: false));
     }
+  }
+
+  FutureOr<void> _onPostInserted(PostInserted event, Emitter<PostState> emit) {
+    emit(
+      state.copyWith(
+          status: RequestStatus.success, posts: [event.item, ...state.posts]),
+    );
   }
 }
