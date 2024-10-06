@@ -23,6 +23,19 @@ class PostItem extends Equatable {
           body: json["body"],
         );
 
+  PostItem copyWith({
+    int? id,
+    int? userId,
+    String? title,
+    String? body,
+  }) {
+    return PostItem(
+        id: id ?? this.id,
+        userId: userId ?? this.userId,
+        title: title ?? this.title,
+        body: body ?? this.title);
+  }
+
   @override
   String toString() {
     int bodyLength = min(body.length, 64);
