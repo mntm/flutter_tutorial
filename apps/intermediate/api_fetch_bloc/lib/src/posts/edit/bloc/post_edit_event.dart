@@ -1,6 +1,6 @@
 part of 'post_edit_bloc.dart';
 
-sealed class PostEditEvent extends Equatable {
+sealed class PostEditEvent extends ApiRequestEvent {
   @override
   List<Object?> get props => [];
 }
