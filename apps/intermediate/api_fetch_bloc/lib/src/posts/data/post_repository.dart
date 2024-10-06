@@ -12,21 +12,21 @@ class PostRepository {
     List<PostItem> items = [];
     Response response = await _performGet(Uri.parse(
         "https://jsonplaceholder.typicode.com/posts?_start=$startIndex&_limit=$limit"));
-    items = _decodeResponseForItems(response);
+    items = await _decodeResponseForItems(response);
     return items;
   }
 
-  List<PostItem> _decodeResponseForItems(Response response) {
+  Future<List<PostItem>> _decodeResponseForItems(Response response) async {
     List<PostItem> items = [];
     try {
       List<dynamic> json =
-          response.statusCode.asHttpStatusCode(response) as List;
+          await response.statusCode.asHttpStatusCode(response) as List;
       items = json.map(PostItem.formJson).toList();
     } on HttpException catch (_) {
       rethrow;
     } catch (e) {
       debugPrintStack();
-      throw const FormatException("Bad response format");
+      throw FormatException("Bad response format: ${e.toString()}");
     }
     return items;
   }
