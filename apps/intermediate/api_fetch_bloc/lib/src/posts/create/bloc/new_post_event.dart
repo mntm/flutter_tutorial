@@ -1,6 +1,6 @@
 part of "new_post_bloc.dart";
 
-sealed class CreateNewPostEvent extends Equatable {
+sealed class CreateNewPostEvent extends ApiRequestEvent {
   @override
   List<Object?> get props => [];
 }
