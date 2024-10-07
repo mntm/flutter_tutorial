@@ -24,6 +24,10 @@ class PostModificationPayload extends Equatable {
           userId: item.userId,
         );
 
+  Map<String, dynamic> toJson() {
+    return {"id": id, "userId": userId, "title": title, "body": body};
+  }
+
   @override
   String toString() {
     int bodyLength = min(body.length, 64);

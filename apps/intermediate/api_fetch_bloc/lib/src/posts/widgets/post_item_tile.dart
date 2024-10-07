@@ -1,3 +1,4 @@
+import 'package:api_fetch_bloc/src/posts/edit/ui/ui.dart';
 import 'package:api_fetch_bloc/src/posts/models/models.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,29 @@ class PostItemTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(8)),
       child: ListTile(
         isThreeLine: false,
-        leading: Text("${item.id}"),
+        leading: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("${item.id}"),
+            Flexible(
+              child: IconButton(
+                  onPressed: () async {
+                    await showAdaptiveDialog(
+                        context: context,
+                        builder: (context) {
+                          return EditPostPage(
+                            item: item,
+                          );
+                        });
+                  },
+                  icon: const Icon(
+                    Icons.edit,
+                    size: 16,
+                  )),
+            )
+          ],
+        ),
         title: Text(
           item.title,
           maxLines: 1,
