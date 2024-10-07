@@ -25,9 +25,15 @@ class NewFormPage extends StatelessWidget {
             onCancel: () {
               Navigator.pop(context);
             },
-            onSubmit: (context, title, body) {
-              context.read<CreateNewPostBloc>().add(CreateNewPostSubmitted(
-                  PostCreationPayload.flexible(title: title, body: body)));
+            onSubmit: (context, result) {
+              context.read<CreateNewPostBloc>().add(
+                    CreateNewPostSubmitted(
+                      PostCreationPayload.flexible(
+                        title: result.title,
+                        body: result.body,
+                      ),
+                    ),
+                  );
             },
           ),
         ),

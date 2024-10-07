@@ -5,6 +5,21 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+class PostEditionSubmissionResult {
+  final String title;
+  final String body;
+  final PostItem? original;
+
+  const PostEditionSubmissionResult({
+    required this.title,
+    required this.body,
+    this.original,
+  });
+}
+
+typedef PostEditionSubmitFunction = void Function(
+    BuildContext context, PostEditionSubmissionResult result);
+
 class PostEditionView<T extends Bloc<ApiRequestEvent, ApiRequestState>>
     extends StatelessWidget {
   const PostEditionView({
@@ -12,10 +27,12 @@ class PostEditionView<T extends Bloc<ApiRequestEvent, ApiRequestState>>
     required this.onResolved,
     required this.onCancel,
     required this.onSubmit,
+    this.incomingItem,
   });
   final AsyncValueSetter<PostItem> onResolved;
   final VoidCallback onCancel;
-  final void Function(BuildContext, String title, String body) onSubmit;
+  final PostEditionSubmitFunction onSubmit;
+  final PostItem? incomingItem;
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +47,19 @@ class PostEditionView<T extends Bloc<ApiRequestEvent, ApiRequestState>>
           ListView(
             children: [
               _PostEditionForm(
+                bloc: context.watch<T>(),
                 onCancel: onCancel,
-                onSubmit: onSubmit,
+                onSubmit: (context, title, body) {
+                  onSubmit(
+                      context,
+                      PostEditionSubmissionResult(
+                        title: title,
+                        body: body,
+                        original: incomingItem,
+                      ));
+                },
+                initialBody: incomingItem?.body,
+                initialTitle: incomingItem?.title,
               ),
             ],
           ),
@@ -82,10 +110,15 @@ class _PostEditionForm<T extends Bloc<ApiRequestEvent, ApiRequestState>>
     super.key,
     required this.onSubmit,
     required this.onCancel,
+    this.initialTitle,
+    this.initialBody,
+    required this.bloc,
   });
-
+  final String? initialTitle;
+  final String? initialBody;
   final void Function(BuildContext, String title, String body) onSubmit;
   final VoidCallback onCancel;
+  final T bloc;
 
   @override
   State<_PostEditionForm> createState() => _PostEditionFormState();
@@ -108,6 +141,7 @@ class _PostEditionFormState extends State<_PostEditionForm> {
         child: Column(
           children: [
             _TitleTextFormField(
+              initialValue: widget.initialTitle,
               onSaved: (newValue) {
                 _title = newValue!;
               },
@@ -116,6 +150,7 @@ class _PostEditionFormState extends State<_PostEditionForm> {
               height: 20,
             ),
             _BodyTextFormField(
+              initialValue: widget.initialBody,
               onSaved: (newValue) {
                 _body = newValue ?? "";
               },
@@ -124,6 +159,7 @@ class _PostEditionFormState extends State<_PostEditionForm> {
               height: 20,
             ),
             _ButtonRow(
+              bloc: widget.bloc,
               formKey: _formKey,
               onCancel: widget.onCancel,
               onSubmit: (context) {
@@ -144,11 +180,13 @@ class _ButtonRow<T extends Bloc<ApiRequestEvent, ApiRequestState>>
     required GlobalKey<FormState> formKey,
     required this.onSubmit,
     required this.onCancel,
+    required this.bloc,
   }) : _formKey = formKey;
 
   final ValueSetter<BuildContext> onSubmit;
   final VoidCallback onCancel;
   final GlobalKey<FormState> _formKey;
+  final T bloc;
 
   @override
   Widget build(BuildContext context) {
@@ -168,17 +206,19 @@ class _ButtonRow<T extends Bloc<ApiRequestEvent, ApiRequestState>>
             _formKey.currentState?.save();
             onSubmit(context);
           },
-          child: BlocBuilder<T, ApiRequestState>(builder: (context, state) {
-            if (state is ApiRequestStateWaiting) {
-              return const SizedBox.square(
-                dimension: 24,
-                child: CircularProgressIndicator(
-                  color: Colors.white,
-                ),
-              );
-            }
-            return const Text("Save");
-          }),
+          child: BlocBuilder(
+              bloc: bloc,
+              builder: (context, state) {
+                if (state is ApiRequestStateWaiting) {
+                  return const SizedBox.square(
+                    dimension: 24,
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
+                  );
+                }
+                return const Text("Save");
+              }),
         )
       ],
     );
@@ -186,12 +226,15 @@ class _ButtonRow<T extends Bloc<ApiRequestEvent, ApiRequestState>>
 }
 
 class _TitleTextFormField extends StatelessWidget {
-  const _TitleTextFormField({super.key, required this.onSaved});
+  const _TitleTextFormField(
+      {super.key, required this.onSaved, this.initialValue});
   final FormFieldSetter<String> onSaved;
+  final String? initialValue;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: initialValue,
       onSaved: onSaved,
       maxLength: 100,
       validator: (value) {
@@ -207,12 +250,14 @@ class _TitleTextFormField extends StatelessWidget {
 
 class _BodyTextFormField extends StatelessWidget {
   final FormFieldSetter<String> onSaved;
-
-  const _BodyTextFormField({super.key, required this.onSaved});
+  final String? initialValue;
+  const _BodyTextFormField(
+      {super.key, required this.onSaved, this.initialValue});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: initialValue,
       maxLength: 5000,
       maxLines: null,
       onSaved: onSaved,
