@@ -10,7 +10,10 @@ class AdaptiveDialog extends StatelessWidget {
 
     return width > 400
         ? Dialog(
-            child: child,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints.tightFor(width: 400),
+              child: child,
+            ),
           )
         : Dialog.fullscreen(
             child: child,
