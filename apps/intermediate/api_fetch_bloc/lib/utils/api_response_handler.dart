@@ -55,7 +55,6 @@ class ApiResponseHandler {
   }
 
   FutureOr<dynamic> _handle200(Response response) {
-    debugPrint('Success: ${response.body}');
     HttpContentType contentType =
         HttpContentType.of(response.headers["content-type"]);
     return contentType.decode(response.body);
