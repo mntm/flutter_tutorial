@@ -86,4 +86,16 @@ class PostRepository {
       throw Exception("Modify Item: ${e.toString()}");
     }
   }
+
+  Future<void> deleteItem(PostModificationPayload item) async {
+    try {
+      await _performModifyingRequest(
+        Uri.parse("https://jsonplaceholder.typicode.com/posts/${item.id}"),
+        method: ModifyingHttpMethod.delete,
+        data: item,
+      );
+    } catch (e) {
+      throw Exception("Delete Item: ${e.toString()}");
+    }
+  }
 }
