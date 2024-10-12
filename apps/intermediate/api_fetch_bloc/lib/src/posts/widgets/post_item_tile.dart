@@ -1,3 +1,4 @@
+import 'package:api_fetch_bloc/src/posts/delete/ui/ui.dart';
 import 'package:api_fetch_bloc/src/posts/edit/ui/ui.dart';
 import 'package:api_fetch_bloc/src/posts/list/bloc/post_bloc.dart';
 import 'package:api_fetch_bloc/src/posts/models/models.dart';
@@ -22,11 +23,10 @@ class PostItemTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(8)),
       child: ListTile(
         isThreeLine: false,
-        leading: Column(
+        trailing: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("${item.id}"),
             Flexible(
               child: IconButton(
                   onPressed: () async {
@@ -45,9 +45,27 @@ class PostItemTile extends StatelessWidget {
                     Icons.edit,
                     size: 16,
                   )),
-            )
+            ),
+            Flexible(
+              child: IconButton(
+                  onPressed: () async {
+                    final result = await showDialog(
+                        context: context,
+                        builder: (context) {
+                          return DeletionConfirmation(item: item);
+                        });
+                    if (result != null && context.mounted) {
+                      context.read<PostBloc>().add(PostRemoved(result));
+                    }
+                  },
+                  icon: const Icon(
+                    Icons.delete,
+                    size: 16,
+                  )),
+            ),
           ],
         ),
+        leading: Text("${item.id}"),
         title: Text(
           item.title,
           maxLines: 1,
