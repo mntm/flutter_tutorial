@@ -14,3 +14,11 @@ class PostInserted extends PostEvent {
   @override
   List<Object?> get props => super.props..add(item);
 }
+
+class PostRemoved extends PostEvent {
+  final PostItem item;
+
+  PostRemoved(this.item);
+  @override
+  List<Object?> get props => super.props..add(item);
+}

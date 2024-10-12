@@ -27,6 +27,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     on<PostRequested>(_onPostRequested,
         transformer: throttleEvents(const Duration(milliseconds: 300)));
     on<PostInserted>(_onPostInserted);
+    on<PostRemoved>(_onPostRemoved);
   }
 
   final PostRepository repo;
@@ -68,5 +69,11 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       state.copyWith(
           status: RequestStatus.success, posts: List.of(state.posts)),
     );
+  }
+
+  FutureOr<void> _onPostRemoved(PostRemoved event, Emitter<PostState> emit) {
+    state.posts.remove(event.item);
+    emit(state.copyWith(
+        status: RequestStatus.success, posts: List.of(state.posts)));
   }
 }
