@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:api_fetch_bloc/src/posts/data/post_repository.dart';
 import 'package:api_fetch_bloc/src/posts/models/models.dart';
-import 'package:api_fetch_bloc/utils/bloc/bloc.dart';
+import 'package:api_fetch_bloc/api/bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

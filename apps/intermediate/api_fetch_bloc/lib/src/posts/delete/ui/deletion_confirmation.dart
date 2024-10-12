@@ -1,7 +1,7 @@
 import 'package:api_fetch_bloc/src/posts/data/post_repository.dart';
 import 'package:api_fetch_bloc/src/posts/delete/bloc/bloc.dart';
 import 'package:api_fetch_bloc/src/posts/models/models.dart';
-import 'package:api_fetch_bloc/utils/bloc/api_access_bloc.dart';
+import 'package:api_fetch_bloc/api/bloc/api_access_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

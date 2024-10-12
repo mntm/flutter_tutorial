@@ -1,6 +1,6 @@
 import 'package:api_fetch_bloc/src/posts/models/models.dart';
 import 'package:api_fetch_bloc/src/posts/widgets/widgets.dart';
-import 'package:api_fetch_bloc/utils/bloc/bloc.dart';
+import 'package:api_fetch_bloc/api/bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
