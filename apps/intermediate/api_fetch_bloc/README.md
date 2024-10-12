@@ -14,6 +14,6 @@ The post is fetched by 20. The first batch is requested during the launch of the
 ## Features
 - [x] Display a list of Post
 - [x] Create a new Post
-- [] Edit a post
+- [x] Edit a post
 - [] Delete a post
 - [] Display a post inside a BottomSheet w/ the user's info

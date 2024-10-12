@@ -1,6 +1,8 @@
 import 'package:api_fetch_bloc/src/posts/edit/ui/ui.dart';
+import 'package:api_fetch_bloc/src/posts/list/bloc/post_bloc.dart';
 import 'package:api_fetch_bloc/src/posts/models/models.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PostItemTile extends StatelessWidget {
   const PostItemTile({
@@ -28,13 +30,16 @@ class PostItemTile extends StatelessWidget {
             Flexible(
               child: IconButton(
                   onPressed: () async {
-                    await showAdaptiveDialog(
+                    final result = await showAdaptiveDialog<PostItem>(
                         context: context,
                         builder: (context) {
                           return EditPostPage(
                             item: item,
                           );
                         });
+                    if (result != null && context.mounted) {
+                      context.read<PostBloc>().add(PostInserted(result));
+                    }
                   },
                   icon: const Icon(
                     Icons.edit,

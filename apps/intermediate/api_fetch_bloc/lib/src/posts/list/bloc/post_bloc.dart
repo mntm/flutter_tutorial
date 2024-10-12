@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:api_fetch_bloc/src/posts/data/post_repository.dart';
 import 'package:api_fetch_bloc/src/posts/models/models.dart';
 import 'package:api_fetch_bloc/utils/request_status.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stream_transform/stream_transform.dart';
 
@@ -52,10 +54,19 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     }
   }
 
-  FutureOr<void> _onPostInserted(PostInserted event, Emitter<PostState> emit) {
+  void _onPostInserted(PostInserted event, Emitter<PostState> emit) {
+    int index = state.posts.indexWhere((item) => item.id == event.item.id);
+    if (index == -1) {
+      state.posts.add(event.item);
+    } else {
+      debugPrint(
+          "index: $index -- start: $index -- end: ${max(index + 1, index % state.posts.length)}");
+      state.posts.setRange(
+          index, max(index + 1, index % state.posts.length), [event.item]);
+    }
     emit(
       state.copyWith(
-          status: RequestStatus.success, posts: [event.item, ...state.posts]),
+          status: RequestStatus.success, posts: List.of(state.posts)),
     );
   }
 }
