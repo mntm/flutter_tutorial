@@ -6,7 +6,7 @@ class AdaptiveDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.sizeOf(context).width;
+    final width = MediaQuery.sizeOf(context).width;
 
     return width > 400
         ? Dialog(

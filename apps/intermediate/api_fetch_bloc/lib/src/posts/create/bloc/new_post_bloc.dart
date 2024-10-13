@@ -20,7 +20,7 @@ class CreateNewPostBloc extends Bloc<CreateNewPostEvent, ApiRequestState> {
     emit(ApiRequestStateWaiting());
     await Future.delayed(const Duration(seconds: 2));
     try {
-      var result = await repo.createItem(event.payload);
+      final result = await repo.createItem(event.payload);
       emit(ApiRequestStateResolved(result));
     } catch (e) {
       emit(ApiRequestStateRejected(event.payload, e as Exception));

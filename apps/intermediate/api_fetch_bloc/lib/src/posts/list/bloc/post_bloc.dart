@@ -37,7 +37,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     if (!state.hasNext) return;
     try {
       int limit = 18;
-      var items =
+      final items =
           await repo.getItems(limit: limit, startIndex: state.posts.length);
 
       emit(

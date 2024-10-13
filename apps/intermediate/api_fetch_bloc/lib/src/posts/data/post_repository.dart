@@ -19,7 +19,7 @@ class PostRepository {
 
   Future<PostItem> createItem(PostCreationPayload item) async {
     try {
-      var response = await nethelper.performModifyingRequest(
+      final response = await nethelper.performModifyingRequest(
         Uri.parse("https://jsonplaceholder.typicode.com/posts"),
         method: ModifyingHttpMethod.post,
         data: item,
@@ -32,7 +32,7 @@ class PostRepository {
 
   Future<PostItem> modifyItem(PostModificationPayload item) async {
     try {
-      var response = await nethelper.performModifyingRequest(
+      final response = await nethelper.performModifyingRequest(
         Uri.parse("https://jsonplaceholder.typicode.com/posts/${item.id}"),
         method: ModifyingHttpMethod.put,
         data: item,

@@ -44,7 +44,7 @@ class AddNewPostWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: () async {
-        var result = await showAdaptiveDialog(
+        final result = await showAdaptiveDialog(
           context: context,
           builder: (context) => const NewFormPage(),
         );

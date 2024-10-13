@@ -30,7 +30,7 @@ class NetworkRequestsHelper {
   }) async {
     Response response;
     try {
-      var headers = {"content-type": contentType.value};
+      final headers = {"content-type": contentType.value};
       response = await method.caller(_http,
           url: url, headers: headers, body: contentType.encode(data));
     } catch (e) {
