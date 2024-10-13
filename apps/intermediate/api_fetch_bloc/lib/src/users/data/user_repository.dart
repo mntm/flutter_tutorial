@@ -1,14 +1,17 @@
-import 'package:api_fetch_bloc/api/utils/utils.dart';
-import 'package:api_fetch_bloc/src/users/models/models.dart';
+import 'package:api_fetch_bloc/src/users/data/user_api_requests.dart';
+import 'package:api_fetch_bloc/src/users/models/user.dart';
 
 class UserRepository {
-  final NetworkRequestsHelper nethelper = NetworkRequestsHelper();
+  final UserApiRequests _fetch = UserApiRequests();
+  final Map<int, User> _cache = {};
 
   Future<User> getUserById(int id) async {
     try {
-      final response = await nethelper.performGet(
-          Uri.parse("https://jsonplaceholder.typicode.com/users/$id"));
-      return User.fromJson(response);
+      if (_cache[id] == null) {
+        final user = await _fetch.getUserById(id);
+        _cache[id] = user;
+      }
+      return _cache[id]!;
     } catch (e) {
       throw Exception("Error: Get User #$id -- ${e.toString()}");
     }
