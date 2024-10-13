@@ -16,20 +16,9 @@ class PostListPage extends StatelessWidget {
         PostRepository repo = RepositoryProvider.of<PostRepository>(context);
         return PostBloc(repo)..add(PostRequested());
       },
-      child: Scaffold(
-        appBar: AppBar(
-            title: const Text("Posts"),
-            centerTitle: true,
-            titleTextStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                ),
-            backgroundColor: Colors.blue),
-        body: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8.0),
-          child: PostListView(),
-        ),
-        floatingActionButton: const AddNewPostWidget(),
+      child: const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8.0),
+        child: PostListView(),
       ),
     );
   }

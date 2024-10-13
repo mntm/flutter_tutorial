@@ -8,7 +8,30 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: PostListPage(),
+      home: HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Posts"),
+        centerTitle: true,
+        titleTextStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
+              color: Colors.white,
+              fontWeight: FontWeight.w500,
+            ),
+        backgroundColor: Colors.blue,
+      ),
+      floatingActionButton: const AddNewPostWidget(),
+      body: const SafeArea(
+        child: PostListPage(),
+      ),
     );
   }
 }
