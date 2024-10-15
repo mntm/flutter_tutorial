@@ -9,16 +9,16 @@ class ApiRequestStateInitial extends ApiRequestState {}
 
 class ApiRequestStateWaiting extends ApiRequestState {}
 
-class ApiRequestStateResolved extends ApiRequestState {
-  final dynamic item;
+class ApiRequestStateResolved<T> extends ApiRequestState {
+  final T item;
 
   ApiRequestStateResolved(this.item);
   @override
   List<Object?> get props => super.props..add(item);
 }
 
-class ApiRequestStateRejected extends ApiRequestState {
-  final dynamic failedPayload;
+class ApiRequestStateRejected<T> extends ApiRequestState {
+  final T failedPayload;
   final dynamic reason;
 
   ApiRequestStateRejected(this.failedPayload, this.reason);
