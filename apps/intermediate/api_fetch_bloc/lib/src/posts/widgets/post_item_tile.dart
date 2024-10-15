@@ -2,6 +2,7 @@ import 'package:api_fetch_bloc/src/posts/delete/ui/ui.dart';
 import 'package:api_fetch_bloc/src/posts/edit/ui/ui.dart';
 import 'package:api_fetch_bloc/src/posts/list/bloc/post_bloc.dart';
 import 'package:api_fetch_bloc/src/posts/models/models.dart';
+import 'package:api_fetch_bloc/src/posts/widgets/post_info_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,6 +23,21 @@ class PostItemTile extends StatelessWidget {
           color: colorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(8)),
       child: ListTile(
+        onTap: () {
+          showModalBottomSheet<void>(
+            isDismissible: true,
+            isScrollControlled: true,
+            showDragHandle: true,
+            useSafeArea: true,
+            context: context,
+            builder: (context) {
+              return SizedBox(
+                height: MediaQuery.sizeOf(context).height * .6,
+                child: PostInfoView(item: item),
+              );
+            },
+          );
+        },
         isThreeLine: false,
         trailing: Column(
           mainAxisSize: MainAxisSize.max,
